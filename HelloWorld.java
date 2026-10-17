@@ -7,9 +7,9 @@ public class HelloWorld {
         //Setup
         //System.out.println("Hello, World!");
 
-        //A1 function
-        Assignment1.twoThreads();
-        Assignment1.Synchronization();
+        //Assignment1 function
+        new Assignment1().twoThreads();
+        new Assignment1().Synchronization();
 
     }
 }
