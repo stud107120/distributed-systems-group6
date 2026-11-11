@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package db;
+
+option java_package = "db";
+option java_outer_classname = "DatabaseServiceProto";
+
+// gRPC service interface: every rpc is one remote operation with its own
+// request/response message types. protoc + the grpc plugin generate the
+// client stub and the server base class from this.
+service DatabaseService {
+  rpc GetRecord(GetRecordRequest) returns (GetRecordResponse);
+  rpc AddRecord(AddRecordRequest) returns (AddRecordResponse);
+  rpc GetSize(GetSizeRequest) returns (GetSizeResponse);
+}
+
+message GetRecordRequest {
+  int32 index = 1;
+}
+
+message GetRecordResponse {
+  optional string record = 1;   // set when the index exists
+  optional string error  = 2;   // set when the index does not exist
+}
+
+message AddRecordRequest {
+  int32 index   = 1;
+  string record = 2;
+}
+
+message AddRecordResponse {
+  optional string error = 1;    // optional, for future error cases
+}
+
+message GetSizeRequest {
+  // no parameters needed
+}
+
+message GetSizeResponse {
+  int32 size = 1;
+}
