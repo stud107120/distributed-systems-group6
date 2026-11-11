@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package db;
+
+option java_package = "db";
+option java_outer_classname = "DatabaseRPC";
+
+// Welche Operation der Server ausfuehren soll.
+// proto3-Regel: der erste Enum-Wert MUSS 0 sein.
+enum Operation {
+  UNKNOWN    = 0;
+  GET_RECORD = 1;
+  ADD_RECORD = 2;
+  GET_SIZE   = 3;
+}
+
+// Argumente fuer getRecord: nur der Index
+message GetRecordArg {
+  int32 index = 1;
+}
+
+// Argumente fuer addRecord: Index + Inhalt
+message AddRecordArg {
+  int32 index  = 1;
+  string record = 2;
+}
+
+// getSize braucht keine Argumente -> kein eigenes Arg-Feld noetig,
+// das operation-Feld allein sagt dem Server, was zu tun ist.
+
+message RPC_Request {
+  Operation operation = 1;
+  GetRecordArg get_record = 2;   // message-Felder haben in proto3 automatisch hasGetRecord()
+  AddRecordArg add_record = 3;   // message-Felder haben in proto3 automatisch hasAddRecord()
+}
+
+message RPC_Response {
+  optional string record = 1;    // Ergebnis von getRecord  (optional -> hasRecord())
+  optional int32 size   = 2;     // Ergebnis von getSize    (optional -> hasSize())
+  optional string error  = 3;    // Fehlermeldung, z.B. "kein Record mit Index 4107"
+}

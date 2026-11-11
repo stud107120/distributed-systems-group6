@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package log;
+
+option java_package = "log";
+option java_outer_classname = "LogMessageProto";
+
+enum Severity {
+  UNKNOWN = 0;
+  DEBUG   = 1;
+  INFO    = 2;
+  WARN    = 3;
+  ERROR   = 4;
+  FATAL   = 5;
+}
+
+message LogMessage {
+  int64 timestamp = 1;        // Millisekunden seit Epoch
+  optional string source = 2; // wer/wo — optional
+  Severity severity = 3;
+  string message = 4;         // einzeiliger Text
+}
