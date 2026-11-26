@@ -83,6 +83,7 @@ public class JsonClient
         {
             String answer = reader.readLine();
             System.out.println("Answer from server: " + answer);
+            System.out.println();
 
         }catch (IOException e)
         {

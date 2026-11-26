@@ -87,8 +87,15 @@ class RequestHandler implements Runnable
                     {
                         int index = params.get("index").getAsInt();
                         String city = JsonServer.database.get(index);
-                        resp.addProperty("index", index);
-                        resp.addProperty("city", city);
+                        if (city == null){
+                            JsonObject err = new JsonObject();
+                            err.addProperty("code", -32000);
+                            err.addProperty("message","no Record with index: " + index);
+                            resp.add("error", err);
+                        } else {
+                            resp.addProperty("index", index);
+                            resp.addProperty("city", city);                           
+                        }
                     }
                     case "getSize" ->
                     {
